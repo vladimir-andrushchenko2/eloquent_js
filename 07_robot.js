@@ -169,8 +169,11 @@ function goalOrientedRobotEfficient({ place, parcels }, route) {
             return prev;
         }, []);
 
-        // ERROR: route to deliver is empty here
-        route = route_to_pick_up <= route_to_deliver ? route_to_pick_up : route_to_deliver;
+        if (route_to_deliver.length > 0 && route_to_pick_up.route_to_pick_up > 0) {
+            route = route_to_pick_up <= route_to_deliver ? route_to_pick_up : route_to_deliver;
+        } else {
+            route = route_to_pick_up.length > 0 ? route_to_pick_up : route_to_deliver;
+        }
     }
 
     return { direction: route[0], memory: route.slice(1) };
